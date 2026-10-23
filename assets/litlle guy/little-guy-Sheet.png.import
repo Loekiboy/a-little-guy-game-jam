@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jeq84b4n0oc2"
-path="res://.godot/imported/little-guy.png-233b8587451e4ae274d5825cebe3395c.ctex"
+uid="uid://ddquyg2i6tdex"
+path="res://.godot/imported/little-guy-Sheet.png-4a026e2e15fbdd5a96b34af8f4a2c11b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/litlle guy/little-guy.png"
-dest_files=["res://.godot/imported/little-guy.png-233b8587451e4ae274d5825cebe3395c.ctex"]
+source_file="res://assets/litlle guy/little-guy-Sheet.png"
+dest_files=["res://.godot/imported/little-guy-Sheet.png-4a026e2e15fbdd5a96b34af8f4a2c11b.ctex"]
 
 [params]
 
