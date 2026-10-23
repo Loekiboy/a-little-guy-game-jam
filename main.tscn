@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://b6ipfcvdn7c08"]
+
+[ext_resource type="Script" uid="uid://cy4c0oogfr166" path="res://start_text.gd" id="1_1bvp3"]
+[ext_resource type="FontFile" uid="uid://nam0rxx35kgc" path="res://assets/font/augiepixel.ttf" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://dtyrxlqdu0rvu" path="res://scripts/rich_text_label.gd" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://di5fvfyym2hhp" path="res://assets/space-Sheet.png" id="3_h2yge"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bvp3"]
+atlas = ExtResource("3_h2yge")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lquwl"]
+atlas = ExtResource("3_h2yge")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xl74u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bvp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lquwl")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D" unique_id=1845390978]
+
+[node name="start-text" type="Node2D" parent="." unique_id=1436044267]
+visible = false
+position = Vector2(555.375, 412.625)
+scale = Vector2(2.8984375, 2.8984375)
+script = ExtResource("1_1bvp3")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="start-text" unique_id=554667846]
+offset_left = -95.69812
+offset_top = -75.77359
+offset_right = 552.3019
+offset_bottom = 82.22641
+scale = Vector2(0.385, 0.385)
+theme_override_fonts/normal_font = ExtResource("1_ig7tw")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "[wave] You are the little guys, save the big guy! [/wave]"
+script = ExtResource("2_0xm2m")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="start-text" unique_id=1483420392]
+sprite_frames = SubResource("SpriteFrames_xl74u")
+autoplay = "default"

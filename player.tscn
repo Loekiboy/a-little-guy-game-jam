@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://disf2l51ydbuu"]
+
+[ext_resource type="Script" uid="uid://dwajyc4nu0okg" path="res://scripts/character_body_2d.gd" id="1_onrkg"]
+[ext_resource type="Texture2D" uid="uid://jeq84b4n0oc2" path="res://assets/litlle guy/little-guy.png" id="2_i3pqv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l74px"]
+size = Vector2(53, 64)
+
+[node name="Node2D" type="Node2D" unique_id=1618025329]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=388879579]
+script = ExtResource("1_onrkg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1615846357]
+position = Vector2(2.5, 1)
+shape = SubResource("RectangleShape2D_l74px")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1662484451]
+texture = ExtResource("2_i3pqv")
