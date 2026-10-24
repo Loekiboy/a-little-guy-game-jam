@@ -6,6 +6,8 @@ var tilt_angle: float
 
 var _flip_timer: = 0.0
 var _tilt_state: = 1
+var is_dead: bool = false 
+
 
 func _ready() -> void:
 	add_to_group("player")
@@ -54,3 +56,20 @@ func _physics_process(delta: float) -> void:
 		$AnimatedSprite2D.play("default")
 		
 	move_and_slide()
+
+func die() -> void:
+	if is_dead:
+		return
+		
+	is_dead = true
+	velocity = Vector2.ZERO
+	set_physics_process(false)
+	$AnimatedSprite2D.play("death")
+	
+	$CollisionShape2D.set_deferred("disabled", true)
+
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	if Input.is_action_pressed("attack"):
+		if body.is_in_group("dino"):
+			body.damage()

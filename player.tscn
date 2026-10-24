@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://disf2l51ydbuu"]
 
 [ext_resource type="Script" uid="uid://dwajyc4nu0okg" path="res://scripts/character_body_2d.gd" id="1_onrkg"]
+[ext_resource type="Texture2D" uid="uid://c2car6b24objb" path="res://assets/blood.png" id="3_hqtel"]
 [ext_resource type="Texture2D" uid="uid://ddquyg2i6tdex" path="res://assets/litlle guy/little-guy-Sheet.png" id="3_i3pqv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l74px"]
@@ -44,6 +45,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("3_hqtel")
+}],
+"loop": 1,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_hqtel")
 }],
 "loop": 1,
@@ -62,6 +71,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4xl1"]
+size = Vector2(70, 74)
+
 [node name="Node2D" type="Node2D" unique_id=1618025329]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=388879579]
@@ -74,6 +86,13 @@ shape = SubResource("RectangleShape2D_l74px")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=2119249064]
 sprite_frames = SubResource("SpriteFrames_l74px")
-animation = &"attack"
 autoplay = "default"
-frame_progress = 0.40927798
+frame_progress = 0.23556067
+
+[node name="attackArea" type="Area2D" parent="CharacterBody2D" unique_id=1245815784]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/attackArea" unique_id=1916243870]
+position = Vector2(3, 1)
+shape = SubResource("RectangleShape2D_s4xl1")
+
+[connection signal="body_entered" from="CharacterBody2D/attackArea" to="CharacterBody2D" method="_on_attack_area_body_entered"]

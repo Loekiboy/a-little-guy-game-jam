@@ -3,6 +3,20 @@
 [ext_resource type="Texture2D" uid="uid://d1iciovvvhrlr" path="res://assets/dino-Sheet.png" id="1_la3et"]
 [ext_resource type="Script" uid="uid://dr1lixy1oo44s" path="res://scripts/dino.gd" id="1_nb2aw"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nb2aw"]
+bg_color = Color(0.6745098, 0.19607843, 0.19607843, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jgde"]
+bg_color = Color(0.6, 0.8980392, 0.3137255, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4xl1"]
 size = Vector2(85, 58)
 
@@ -55,6 +69,17 @@ size = Vector2(52, 68)
 [node name="dino" type="CharacterBody2D" parent="." unique_id=116076253]
 script = ExtResource("1_nb2aw")
 
+[node name="HealthBar" type="ProgressBar" parent="dino" unique_id=253180077]
+offset_left = -32.0
+offset_top = -36.0
+offset_right = 32.0
+offset_bottom = -27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_nb2aw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2jgde")
+step = 1.0
+value = 100.0
+show_percentage = false
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="dino" unique_id=539607369]
 position = Vector2(0.5, 22)
 shape = SubResource("RectangleShape2D_s4xl1")
@@ -79,3 +104,4 @@ shape = SubResource("RectangleShape2D_xl74u")
 
 [connection signal="body_entered" from="dino/AttackArea" to="dino" method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="dino/AttackArea" to="dino" method="_on_attack_area_body_exited"]
+[connection signal="body_entered" from="dino/DamageArea" to="dino" method="_on_damage_area_body_entered"]

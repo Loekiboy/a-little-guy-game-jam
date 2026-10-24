@@ -6,14 +6,19 @@ var tilt_angle: float
 var _flip_timer: = 0.0
 var _tilt_state: = 1
 var random: = 50
+var health: = 100
 var is_attacking: bool = false 
 
+@onready var health_bar: ProgressBar = $HealthBar
+
+
 func _ready() -> void:
+	add_to_group("dino")
 	flip_interval = randf_range(0.15, 0.25)
 	tilt_angle = randf_range(0.08, 0.12)
 	_flip_timer = randf_range(0.0, flip_interval)
 	_tilt_state = 1 if randf() > 0.5 else -1
-	
+	update_health_bar()
 	$AnimatedSprite2D.play("default")
 
 func _physics_process(delta: float) -> void:
@@ -60,7 +65,7 @@ func _physics_process(delta: float) -> void:
 		_tilt_state = 1
 		$AnimatedSprite2D.rotation = 0.0
 			
-	move_and_slide()
+	#move_and_slide()
 
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
@@ -72,3 +77,15 @@ func _on_attack_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		is_attacking = false
 		$AnimatedSprite2D.play("default")
+
+func _on_damage_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		body.die()
+		
+func damage() -> void:
+	health -= 1
+	update_health_bar()
+	
+func update_health_bar():
+	if is_instance_valid(health_bar):
+		health_bar.value = health

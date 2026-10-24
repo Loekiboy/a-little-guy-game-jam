@@ -48,4 +48,4 @@ func _physics_process(delta: float) -> void:
 		_tilt_state = 1
 		$Sprite2D.rotation = 0.0
 			
-	move_and_slide()
+	#move_and_slide()
