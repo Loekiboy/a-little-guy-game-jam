@@ -1,11 +1,18 @@
 [gd_scene format=3 uid="uid://disf2l51ydbuu"]
 
-[ext_resource type="Script" uid="uid://dsvpd6ibhjqgw" path="res://scripts/main.gd" id="1_i3pqv"]
 [ext_resource type="Script" uid="uid://dwajyc4nu0okg" path="res://scripts/character_body_2d.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://ddquyg2i6tdex" path="res://assets/litlle guy/little-guy-Sheet.png" id="3_i3pqv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l74px"]
 size = Vector2(53, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onrkg"]
+atlas = ExtResource("3_i3pqv")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3pqv"]
+atlas = ExtResource("3_i3pqv")
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hqtel"]
 atlas = ExtResource("3_i3pqv")
@@ -21,6 +28,20 @@ region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_l74px"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onrkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3pqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onrkg")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hqtel")
@@ -42,7 +63,6 @@ animations = [{
 }]
 
 [node name="Node2D" type="Node2D" unique_id=1618025329]
-script = ExtResource("1_i3pqv")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=388879579]
 scale = Vector2(0.5, 0.5)
@@ -54,5 +74,6 @@ shape = SubResource("RectangleShape2D_l74px")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=2119249064]
 sprite_frames = SubResource("SpriteFrames_l74px")
-animation = &"fall"
+animation = &"attack"
 autoplay = "default"
+frame_progress = 0.40927798

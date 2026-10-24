@@ -4,13 +4,13 @@ var speed: float
 var flip_interval: float
 var tilt_angle: float
 
-var _flip_timer := 0.0
-var _tilt_state := 1
+var _flip_timer: = 0.0
+var _tilt_state: = 1
 
 func _ready() -> void:
-	speed = randf_range(285.0, 315.0)
+	speed = randf_range(185.0, 215.0)
 	
-	flip_interval = randf_range(0.15, 0.25)
+	flip_interval = randf_range(0.08, 0.18)
 	
 	tilt_angle = randf_range(0.08, 0.12)
 	
@@ -46,4 +46,9 @@ func _physics_process(delta: float) -> void:
 		_tilt_state = 1
 		$AnimatedSprite2D.rotation = 0.0
 			
+	if Input.is_action_pressed("attack"):
+		$AnimatedSprite2D.play("attack")
+	elif $AnimatedSprite2D.animation != "fall":
+		$AnimatedSprite2D.play("default")
+		
 	move_and_slide()
