@@ -8,6 +8,8 @@ var _flip_timer: = 0.0
 var _tilt_state: = 1
 
 func _ready() -> void:
+	add_to_group("player")
+	
 	speed = randf_range(185.0, 215.0)
 	
 	flip_interval = randf_range(0.08, 0.18)

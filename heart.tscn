@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://dya3p5yapk0m6"]
+
+[ext_resource type="Script" uid="uid://dxitwdg8grnyg" path="res://scripts/heart.gd" id="1_7p8dj"]
+[ext_resource type="Texture2D" uid="uid://d3eselwa6bpk4" path="res://assets/hearth-Sheet.png" id="2_pembh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4xl1"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjxl8"]
+atlas = ExtResource("2_pembh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7j81i"]
+atlas = ExtResource("2_pembh")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l74px"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjxl8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7j81i")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="Node2D" type="Node2D" unique_id=973219825]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1906304470]
+script = ExtResource("1_7p8dj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1371186654]
+shape = SubResource("RectangleShape2D_s4xl1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D" unique_id=662359199]
+sprite_frames = SubResource("SpriteFrames_l74px")
+autoplay = "default"
+frame_progress = 0.7294511

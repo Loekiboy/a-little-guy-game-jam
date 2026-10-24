@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://dhlbsjqitctkv"]
+
+[ext_resource type="Texture2D" uid="uid://d1iciovvvhrlr" path="res://assets/dino-Sheet.png" id="1_la3et"]
+[ext_resource type="Script" uid="uid://dr1lixy1oo44s" path="res://scripts/dino.gd" id="1_nb2aw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4xl1"]
+size = Vector2(85, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nb2aw"]
+atlas = ExtResource("1_la3et")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwvfn"]
+atlas = ExtResource("1_la3et")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jgde"]
+atlas = ExtResource("1_la3et")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1bkr"]
+atlas = ExtResource("1_la3et")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l74px"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nb2aw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwvfn")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2jgde")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1bkr")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xl74u"]
+size = Vector2(52, 68)
+
+[node name="Node2D" type="Node2D" unique_id=1190045640]
+
+[node name="dino" type="CharacterBody2D" parent="." unique_id=116076253]
+script = ExtResource("1_nb2aw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="dino" unique_id=539607369]
+position = Vector2(0.5, 22)
+shape = SubResource("RectangleShape2D_s4xl1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="dino" unique_id=1435050213]
+sprite_frames = SubResource("SpriteFrames_l74px")
+animation = &"attack"
+autoplay = "default"
+frame_progress = 0.10712198
+
+[node name="AttackArea" type="Area2D" parent="dino" unique_id=885833993]
+
+[node name="detectionArea" type="CollisionPolygon2D" parent="dino/AttackArea" unique_id=397828591]
+position = Vector2(0, -1)
+polygon = PackedVector2Array(-118, -78, -119, 80, 0, 61, 0, -18)
+
+[node name="DamageArea" type="Area2D" parent="dino" unique_id=652750980]
+
+[node name="damegeArea" type="CollisionShape2D" parent="dino/DamageArea" unique_id=1712104832]
+position = Vector2(-36, 11)
+shape = SubResource("RectangleShape2D_xl74u")
+
+[connection signal="body_entered" from="dino/AttackArea" to="dino" method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="dino/AttackArea" to="dino" method="_on_attack_area_body_exited"]
