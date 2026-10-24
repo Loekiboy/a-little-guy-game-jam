@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dtyrxlqdu0rvu" path="res://scripts/rich_text_label.gd" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://disf2l51ydbuu" path="res://player.tscn" id="2_272bh"]
 [ext_resource type="Texture2D" uid="uid://di5fvfyym2hhp" path="res://assets/space-Sheet.png" id="3_h2yge"]
+[ext_resource type="Texture2D" uid="uid://dmwulqufxitjw" path="res://assets/big-guy.png" id="7_272bh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1bvp3"]
 atlas = ExtResource("3_h2yge")
@@ -28,6 +29,9 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l74px"]
+size = Vector2(108, 104)
 
 [node name="Node2D" type="Node2D" unique_id=1845390978]
 script = ExtResource("1_7mycd")
@@ -54,3 +58,13 @@ script = ExtResource("2_0xm2m")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="start-text" unique_id=1483420392]
 sprite_frames = SubResource("SpriteFrames_xl74u")
 autoplay = "default"
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=315702206]
+position = Vector2(598, 344)
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1468765511]
+texture = ExtResource("7_272bh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=965423675]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_l74px")
