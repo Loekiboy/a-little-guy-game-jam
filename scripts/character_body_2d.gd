@@ -7,7 +7,10 @@ var tilt_angle: float
 var _flip_timer: = 0.0
 var _tilt_state: = 1
 var is_dead: bool = false 
+var _attack_timer: float = 0.0
+var _was_attacking: bool = false
 
+const ATTACK_INTERVAL := 0.2
 
 func _ready() -> void:
 	add_to_group("player")
@@ -52,8 +55,22 @@ func _physics_process(delta: float) -> void:
 			
 	if Input.is_action_pressed("attack"):
 		$AnimatedSprite2D.play("attack")
-	elif $AnimatedSprite2D.animation != "fall":
-		$AnimatedSprite2D.play("default")
+
+		if not _was_attacking:
+			_was_attacking = true
+			_attack_timer = 0.0
+			_deal_attack_damage()
+	
+		_attack_timer += delta
+		while _attack_timer >= ATTACK_INTERVAL:
+			_attack_timer -= ATTACK_INTERVAL
+			_deal_attack_damage()
+
+	else:
+		_was_attacking = false
+		_attack_timer = 0.0
+		if $AnimatedSprite2D.animation != "fall":
+			$AnimatedSprite2D.play("default")
 		
 	move_and_slide()
 
@@ -69,7 +86,7 @@ func die() -> void:
 	$CollisionShape2D.set_deferred("disabled", true)
 
 
-func _on_attack_area_body_entered(body: Node2D) -> void:
-	if Input.is_action_pressed("attack"):
-		if body.is_in_group("dino"):
+func _deal_attack_damage() -> void:
+	for body in $attackArea.get_overlapping_bodies():
+		if body.is_in_group("dino") and body.has_method("damage"):
 			body.damage()

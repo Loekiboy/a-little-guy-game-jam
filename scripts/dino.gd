@@ -6,11 +6,11 @@ var tilt_angle: float
 var _flip_timer: = 0.0
 var _tilt_state: = 1
 var random: = 50
-var health: = 100
+var health: = 10
 var is_attacking: bool = false 
+var is_dead: bool = false 
 
 @onready var health_bar: ProgressBar = $HealthBar
-
 
 func _ready() -> void:
 	add_to_group("dino")
@@ -28,29 +28,37 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return 
 
-	if randf_range(1.0, 300) < 5:
-		random = randf_range(1.0, 100.0)
+	# go to big guy
+	var big_guy = get_tree().get_first_node_in_group("big-guy")
+	
+	if is_instance_valid(big_guy):
+		var my_x = global_position.x
+		var my_y = global_position.y
+		var target_x = big_guy.global_position.x
+		var target_y = big_guy.global_position.y
 		
-	if random < 20:
-		velocity.x = -speed
-		$AnimatedSprite2D.flip_h = false 
-		$AttackArea.scale.x = 1
-		$DamageArea.scale.x = 1
-		
-	elif random < 40:
-		velocity.x = speed
-		$AnimatedSprite2D.flip_h = true 
-		$AttackArea.scale.x = -1
-		$DamageArea.scale.x = -1
+		if my_x < target_x:
+			velocity.x = speed
+			$AnimatedSprite2D.flip_h = true 
+			$AttackArea.scale.x = -1
+			$DamageArea.scale.x = -1
+		elif my_x > target_x:
+			velocity.x = -speed
+			$AnimatedSprite2D.flip_h = false 
+			$AttackArea.scale.x = 1
+			$DamageArea.scale.x = 1
+		else:
+			velocity.x = 0
+			
+		if my_y < target_y:
+			velocity.y = speed
+		elif my_y > target_y:
+			velocity.y = -speed
+		else:
+			velocity.y = 0
+			
 	else:
-		velocity.x = move_toward(velocity.x, 0, 50)
-
-	if random > 80:
-		velocity.y = -speed
-	elif random > 60:
-		velocity.y = speed
-	else:
-		velocity.y = move_toward(velocity.y, 0, 50)
+		velocity = Vector2.ZERO
 		
 	if velocity.length() > 1.0:
 		_flip_timer += delta
@@ -65,22 +73,42 @@ func _physics_process(delta: float) -> void:
 		_tilt_state = 1
 		$AnimatedSprite2D.rotation = 0.0
 			
-	#move_and_slide()
+	move_and_slide()
+	#die script
+	if health < 1:
+		if is_dead:
+			return
+		is_dead = true
+		velocity = Vector2.ZERO
+		set_physics_process(false)
+		$AnimatedSprite2D.play("death")
+
+		$CollisionShape2D.set_deferred("disabled", true)
+		$AttackArea.set_deferred("monitoring", false)
+		$DamageArea.set_deferred("monitoring", false)
 
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
+	if is_dead:
+		return
+	if body.is_in_group("player") or body.is_in_group("big-guy"):
 		is_attacking = true
 		$AnimatedSprite2D.play("attack")
 
 func _on_attack_area_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player"):
+	if is_dead:
+		return
+	if body.is_in_group("player") or body.is_in_group("big-guy"):
 		is_attacking = false
 		$AnimatedSprite2D.play("default")
 
 func _on_damage_area_body_entered(body: Node2D) -> void:
+	if is_dead:
+		return
 	if body.is_in_group("player"):
 		body.die()
+	if body.is_in_group("big-guy"):
+		body.damage()
 		
 func damage() -> void:
 	health -= 1

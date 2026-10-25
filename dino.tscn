@@ -28,6 +28,22 @@ region = Rect2(256, 0, 128, 128)
 atlas = ExtResource("1_la3et")
 region = Rect2(128, 0, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_lpv7y"]
+atlas = ExtResource("1_la3et")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnx7m"]
+atlas = ExtResource("1_la3et")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fo6m"]
+atlas = ExtResource("1_la3et")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfe5y"]
+atlas = ExtResource("1_la3et")
+region = Rect2(768, 0, 128, 128)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_2jgde"]
 atlas = ExtResource("1_la3et")
 region = Rect2(0, 0, 128, 128)
@@ -48,6 +64,23 @@ animations = [{
 "loop": 1,
 "name": &"attack",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lpv7y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnx7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fo6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfe5y")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -86,9 +119,10 @@ shape = SubResource("RectangleShape2D_s4xl1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="dino" unique_id=1435050213]
 sprite_frames = SubResource("SpriteFrames_l74px")
-animation = &"attack"
+animation = &"death"
 autoplay = "default"
-frame_progress = 0.10712198
+frame = 3
+frame_progress = 1.0
 
 [node name="AttackArea" type="Area2D" parent="dino" unique_id=885833993]
 
