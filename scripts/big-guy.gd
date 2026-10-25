@@ -13,6 +13,7 @@ var is_dead: bool = false
 @onready var sfx_player: AudioStreamPlayer = $SFXPlayer
 
 var die_sound: AudioStream = preload("res://assets/sounds/big ded.wav")
+var damage_sound: AudioStream = preload("res://assets/sounds/damage big guy.wav")
 
 func _ready() -> void:
 	add_to_group("big-guy")
@@ -71,12 +72,16 @@ func _physics_process(delta: float) -> void:
 		get_tree().change_scene_to_file("res://ded.tscn")
 
 func damage():
-	health -= 5
+	health -= 3
 	update_health_bar()
+	sfx_player.stream = damage_sound
+	sfx_player.play()
 	
 func damage_beestje():
-	health -= 2
+	health -= 1
 	update_health_bar()
+	sfx_player.stream = damage_sound
+	sfx_player.play()
 	
 func update_health_bar():
 	if is_instance_valid(health_bar):

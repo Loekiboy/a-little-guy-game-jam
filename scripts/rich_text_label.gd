@@ -1,7 +1,8 @@
 extends RichTextLabel
 
 func _ready():
-	self.text = "[wave] You are the little guys, save the big guy! [/wave]"
+	self.text = "[wave] You are the little guys, save the big guy! 
+	click to span a litlle guy, attack with e move with wasd[/wave]"
 	self.visible_ratio = 0.0
 	
 	var tween = create_tween()

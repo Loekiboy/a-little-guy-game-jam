@@ -12,7 +12,7 @@ var spawn_area: Rect2 = Rect2(0, 0, 1152, 648)
 @export var dino_spawn_interval: float = 8
 @export var spawns_per_phase: int = 5
 
-var player_to_span := 100
+var player_to_span := 20
 
 @onready var heart_timer: Timer = $HeartTimer
 @onready var sfx_player: AudioStreamPlayer = $SFXPlayer
@@ -28,6 +28,7 @@ const PHASE_SPEEDUP: float = 0.5
 const MIN_ENEMY_INTERVAL: float = 0.5
 
 func _ready() -> void:
+	TimeGlobal.time_seconds = 0
 	_update_counter()
 
 	enemy_timer = Timer.new()
@@ -84,7 +85,6 @@ func _spawn_enemy() -> void:
 
 	spawns_in_phase += 1
 	if spawns_in_phase >= spawns_per_phase:
-		# Nieuwe fase: dino-kans omhoog en spawnrate met 0.2 sec versnellen
 		spawns_in_phase = 0
 		enemy_phase += 1
 		enemy_timer.wait_time = max(MIN_ENEMY_INTERVAL, enemy_timer.wait_time - PHASE_SPEEDUP)

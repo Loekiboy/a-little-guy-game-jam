@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://c3hqkj3joj7cv" path="res://assets/big-guy-Sheet.png" id="10_efxa6"]
 [ext_resource type="PackedScene" uid="uid://dhlbsjqitctkv" path="res://dino.tscn" id="11_efxa6"]
 [ext_resource type="Texture2D" uid="uid://bgc3hir2wc8u3" path="res://assets/stone-tilest.png" id="14_w48qg"]
+[ext_resource type="AudioStream" uid="uid://b8qdvi6tux0r1" path="res://assets/sounds/music.mp3" id="15_vivmo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_efxa6"]
 bg_color = Color(0.6745098, 0.19607843, 0.19607843, 1)
@@ -161,15 +162,17 @@ scale = Vector2(2.8984375, 2.8984375)
 script = ExtResource("1_1bvp3")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CharacterBody2D/Camera2D/start-text" unique_id=554667846]
-offset_left = -297.87604
-offset_top = -207.56876
-offset_right = 350.12396
-offset_bottom = -49.568756
+offset_left = -318.10245
+offset_top = -214.97273
+offset_right = 335.519
+offset_bottom = 14.922821
 scale = Vector2(0.385, 0.385)
 theme_override_fonts/normal_font = ExtResource("1_ig7tw")
-theme_override_font_sizes/normal_font_size = 64
+theme_override_font_sizes/normal_font_size = 48
 bbcode_enabled = true
-text = "[wave] You are the little guys, save the big guy! [/wave]"
+text = "[wave] You are the little guys, save the big guy! 
+	click to span a litlle guy, attack with e move with wasd [/wave]"
+horizontal_alignment = 1
 script = ExtResource("2_0xm2m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D/Camera2D/start-text" unique_id=1483420392]
@@ -208,7 +211,7 @@ shape = SubResource("RectangleShape2D_l74px")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1463804387]
 sprite_frames = SubResource("SpriteFrames_l74px")
 autoplay = "default"
-frame_progress = 0.31518298
+frame_progress = 0.4928571
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1102475789]
 z_index = -1
@@ -219,3 +222,8 @@ tile_set = SubResource("TileSet_l74px")
 [node name="HeartTimer" type="Timer" parent="." unique_id=548097506]
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=1374038103]
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="." unique_id=634935816]
+stream = ExtResource("15_vivmo")
+autoplay = true
+parameters/looping = true

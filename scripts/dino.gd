@@ -28,7 +28,7 @@ func _ready() -> void:
 	$AnimatedSprite2D.play("default")
 
 	_damage_timer = Timer.new()
-	_damage_timer.wait_time = 0.25
+	_damage_timer.wait_time = 0.5
 	_damage_timer.timeout.connect(_on_damage_tick)
 	add_child(_damage_timer)
 	_damage_timer.start()
@@ -49,12 +49,12 @@ func _physics_process(delta: float) -> void:
 		var target_x = big_guy.global_position.x
 		var target_y = big_guy.global_position.y
 		
-		if my_x < target_x:
+		if my_x + 2< target_x:
 			velocity.x = speed
 			$AnimatedSprite2D.flip_h = true 
 			$AttackArea.scale.x = -1
 			$DamageArea.scale.x = -1
-		elif my_x > target_x:
+		elif my_x - 2> target_x:
 			velocity.x = -speed
 			$AnimatedSprite2D.flip_h = false 
 			$AttackArea.scale.x = 1
@@ -62,9 +62,9 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = 0
 			
-		if my_y < target_y:
+		if my_y + 2 < target_y:
 			velocity.y = speed
-		elif my_y > target_y:
+		elif my_y - 2> target_y:
 			velocity.y = -speed
 		else:
 			velocity.y = 0

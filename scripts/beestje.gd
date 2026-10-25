@@ -28,7 +28,7 @@ func _ready() -> void:
 	$AnimatedSprite2D.play("default")
 
 	_damage_timer = Timer.new()
-	_damage_timer.wait_time = 0.25
+	_damage_timer.wait_time = 0.5
 	_damage_timer.timeout.connect(_on_damage_tick)
 	add_child(_damage_timer)
 	_damage_timer.start()
