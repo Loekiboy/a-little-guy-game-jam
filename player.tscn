@@ -95,4 +95,6 @@ frame_progress = 0.23556067
 position = Vector2(3, 1)
 shape = SubResource("RectangleShape2D_s4xl1")
 
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="CharacterBody2D" unique_id=614605008]
+
 [connection signal="body_entered" from="CharacterBody2D/attackArea" to="CharacterBody2D" method="_on_attack_area_body_entered"]

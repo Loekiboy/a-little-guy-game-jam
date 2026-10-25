@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://g1qbbtlalfcg"]
+
+[ext_resource type="Script" uid="uid://b3uh6yiek6gp4" path="res://scripts/beestje.gd" id="1_y18tk"]
+[ext_resource type="Texture2D" uid="uid://buff2g58j1evi" path="res://assets/beest-Sheet.png" id="2_1wf4a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xybxf"]
+bg_color = Color(0.6745098, 0.19607843, 0.19607843, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1s23f"]
+bg_color = Color(0.6, 0.8980392, 0.3137255, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s232k"]
+size = Vector2(43, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_veu66"]
+atlas = ExtResource("2_1wf4a")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgu8a"]
+atlas = ExtResource("2_1wf4a")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dm75"]
+atlas = ExtResource("2_1wf4a")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8xq7"]
+atlas = ExtResource("2_1wf4a")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvr6l"]
+atlas = ExtResource("2_1wf4a")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7ypm"]
+atlas = ExtResource("2_1wf4a")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jkbd"]
+atlas = ExtResource("2_1wf4a")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_06avj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_veu66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgu8a")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7dm75")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8xq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvr6l")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e7ypm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7jkbd")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pojox"]
+size = Vector2(28.5, 39)
+
+[node name="Node2D" type="Node2D" unique_id=24122494]
+
+[node name="beestje" type="CharacterBody2D" parent="." unique_id=1814313911]
+script = ExtResource("1_y18tk")
+
+[node name="HealthBar" type="ProgressBar" parent="beestje" unique_id=1367241664]
+offset_left = -32.0
+offset_top = -27.0
+offset_right = 32.0
+offset_bottom = -18.0
+theme_override_styles/background = SubResource("StyleBoxFlat_xybxf")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1s23f")
+max_value = 20.0
+step = 1.0
+value = 20.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="beestje" unique_id=193555873]
+position = Vector2(-1.5, 8.5)
+shape = SubResource("RectangleShape2D_s232k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="beestje" unique_id=1445305649]
+sprite_frames = SubResource("SpriteFrames_06avj")
+autoplay = "default"
+frame_progress = 0.42897555
+
+[node name="AttackArea" type="Area2D" parent="beestje" unique_id=1111771353]
+
+[node name="detectionArea" type="CollisionPolygon2D" parent="beestje/AttackArea" unique_id=133629420]
+position = Vector2(0, -1)
+polygon = PackedVector2Array(-71, -38, -71, 56, -1, 38, 0, -18)
+
+[node name="DamageArea" type="Area2D" parent="beestje" unique_id=726673306]
+
+[node name="damegeArea" type="CollisionShape2D" parent="beestje/DamageArea" unique_id=1417714635]
+position = Vector2(-23.75, 5.5)
+shape = SubResource("RectangleShape2D_pojox")
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="beestje" unique_id=966215582]
+
+[connection signal="body_entered" from="beestje/AttackArea" to="beestje" method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="beestje/AttackArea" to="beestje" method="_on_attack_area_body_exited"]
+[connection signal="body_entered" from="beestje/DamageArea" to="beestje" method="_on_damage_area_body_entered"]

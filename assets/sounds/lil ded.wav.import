@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cv8yonp2mf2xh"
+path="res://.godot/imported/lil ded.wav-01b7bbb64b87f853c39d3256daaffc68.sample"
+
+[deps]
+
+source_file="res://assets/sounds/lil ded.wav"
+dest_files=["res://.godot/imported/lil ded.wav-01b7bbb64b87f853c39d3256daaffc68.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

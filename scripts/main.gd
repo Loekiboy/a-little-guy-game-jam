@@ -3,34 +3,43 @@ extends Node2D
 @export var player_scene: PackedScene
 @export var heart_scene: PackedScene
 @export var dino_scene: PackedScene
+@export var beestje_scene: PackedScene
 @export var fall_distance: float = 40.0
 
 var spawn_area: Rect2 = Rect2(0, 0, 1152, 648)
 @export var amount_at_start: int = 20
 @export var spawn_interval: float = 5.0
-@export var dino_spawn_interval: float = 10.0
+@export var dino_spawn_interval: float = 8
+@export var spawns_per_phase: int = 5
 
 var player_to_span := 100
 
 @onready var heart_timer: Timer = $HeartTimer
+@onready var sfx_player: AudioStreamPlayer = $SFXPlayer
 
-var dino_timer: Timer
+var land_sound: AudioStream = preload("res://assets/sounds/land.wav")
+
+var enemy_timer: Timer
+var enemy_phase: int = 0
+var spawns_in_phase: int = 0
+
+const DINO_CHANCE_STEP: float = 0.1
+const PHASE_SPEEDUP: float = 0.5
+const MIN_ENEMY_INTERVAL: float = 0.5
 
 func _ready() -> void:
 	_update_counter()
 
-	# Dino-timer in code aanmaken (geen node in de scene nodig)
-	dino_timer = Timer.new()
-	dino_timer.wait_time = dino_spawn_interval
-	dino_timer.timeout.connect(spawn_dino)
-	add_child(dino_timer)
-	dino_timer.start()
+	enemy_timer = Timer.new()
+	enemy_timer.wait_time = dino_spawn_interval
+	enemy_timer.timeout.connect(_spawn_enemy)
+	add_child(enemy_timer)
+
+	_spawn_enemy()
+	enemy_timer.start()
 
 	for i in amount_at_start:
 		spawn_heart()
-
-	# 1 dino bij de start
-	spawn_dino()
 
 	heart_timer.wait_time = spawn_interval
 	heart_timer.timeout.connect(spawn_heart)
@@ -52,7 +61,6 @@ func add_player_to_span(amount: int = 1) -> void:
 func _update_counter() -> void:
 	$CharacterBody2D/Camera2D/counter.text = str(player_to_span) + "[img]res://assets/litlle guy/little-guy-icon.png[/img]"
 
-# Gedeelde spawnpositie: zelfde gebied als de hartjes
 func _get_spawn_position() -> Vector2:
 	var cam = get_viewport().get_camera_2d()
 	if cam:
@@ -62,11 +70,25 @@ func _get_spawn_position() -> Vector2:
 			randf_range(camx - 800, camx + 800),
 			randf_range(camy - 400, camy + 400)
 		)
-	# Fallback als er (nog) geen camera is
 	return Vector2(
 		randf_range(spawn_area.position.x, spawn_area.end.x),
 		randf_range(spawn_area.position.y, spawn_area.end.y)
 	)
+
+func _spawn_enemy() -> void:
+	var dino_chance: float = enemy_phase * DINO_CHANCE_STEP
+	if randf() < dino_chance:
+		spawn_dino()
+	else:
+		spawn_beestje()
+
+	spawns_in_phase += 1
+	if spawns_in_phase >= spawns_per_phase:
+		# Nieuwe fase: dino-kans omhoog en spawnrate met 0.2 sec versnellen
+		spawns_in_phase = 0
+		enemy_phase += 1
+		enemy_timer.wait_time = max(MIN_ENEMY_INTERVAL, enemy_timer.wait_time - PHASE_SPEEDUP)
+		enemy_timer.start()
 
 func spawn_heart() -> void:
 	if heart_scene == null:
@@ -81,6 +103,13 @@ func spawn_dino() -> void:
 	var dino = dino_scene.instantiate()
 	dino.position = _get_spawn_position()
 	add_child(dino)
+
+func spawn_beestje() -> void:
+	if beestje_scene == null:
+		return
+	var beestje = beestje_scene.instantiate()
+	beestje.position = _get_spawn_position()
+	add_child(beestje)
 
 func spawn_player() -> void:
 	var player = player_scene.instantiate()
@@ -108,3 +137,5 @@ func spawn_player() -> void:
 	player.set_process(true)
 	player.set_physics_process(true)
 	anim_sprite.play("default")
+	sfx_player.stream = land_sound
+	sfx_player.play()

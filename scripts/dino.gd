@@ -6,11 +6,17 @@ var tilt_angle: float
 var _flip_timer: = 0.0
 var _tilt_state: = 1
 var random: = 50
-var health: = 10
+var health: = 50
 var is_attacking: bool = false 
 var is_dead: bool = false 
 
 @onready var health_bar: ProgressBar = $HealthBar
+@onready var sfx_player: AudioStreamPlayer = $SFXPlayer
+
+var ded_sound: AudioStream = preload("res://assets/sounds/dino ded.wav")
+
+
+var _damage_timer: Timer
 
 func _ready() -> void:
 	add_to_group("dino")
@@ -20,6 +26,12 @@ func _ready() -> void:
 	_tilt_state = 1 if randf() > 0.5 else -1
 	update_health_bar()
 	$AnimatedSprite2D.play("default")
+
+	_damage_timer = Timer.new()
+	_damage_timer.wait_time = 0.25
+	_damage_timer.timeout.connect(_on_damage_tick)
+	add_child(_damage_timer)
+	_damage_timer.start()
 
 func _physics_process(delta: float) -> void:
 	if is_attacking:
@@ -86,6 +98,9 @@ func _physics_process(delta: float) -> void:
 		$CollisionShape2D.set_deferred("disabled", true)
 		$AttackArea.set_deferred("monitoring", false)
 		$DamageArea.set_deferred("monitoring", false)
+		
+		if is_instance_valid(_damage_timer):
+			_damage_timer.stop()
 
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
@@ -102,14 +117,16 @@ func _on_attack_area_body_exited(body: Node2D) -> void:
 		is_attacking = false
 		$AnimatedSprite2D.play("default")
 
-func _on_damage_area_body_entered(body: Node2D) -> void:
+func _on_damage_tick() -> void:
 	if is_dead:
 		return
-	if body.is_in_group("player"):
-		body.die()
-	if body.is_in_group("big-guy"):
-		body.damage()
-		
+	for body in $DamageArea.get_overlapping_bodies():
+		if body.is_in_group("player"):
+			body.die()
+		elif body.is_in_group("big-guy"):
+			body.damage()
+			
+
 func damage() -> void:
 	health -= 1
 	update_health_bar()

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cxc65iowrgy70"
+path="res://.godot/imported/big ded.wav-dbb57bf78790f42588802c3609e484b4.sample"
+
+[deps]
+
+source_file="res://assets/sounds/big ded.wav"
+dest_files=["res://.godot/imported/big ded.wav-dbb57bf78790f42588802c3609e484b4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

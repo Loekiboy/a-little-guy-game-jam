@@ -10,6 +10,9 @@ var health: = 100
 var is_dead: bool = false  
 
 @onready var health_bar: ProgressBar = $HealthBar
+@onready var sfx_player: AudioStreamPlayer = $SFXPlayer
+
+var die_sound: AudioStream = preload("res://assets/sounds/big ded.wav")
 
 func _ready() -> void:
 	add_to_group("big-guy")
@@ -62,11 +65,17 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		set_physics_process(false)
 		$AnimatedSprite2D.play("death")
+		sfx_player.stream = die_sound
+		sfx_player.play()
 		await get_tree().create_timer(2.0).timeout
 		get_tree().change_scene_to_file("res://ded.tscn")
 
 func damage():
-	health -= 20
+	health -= 5
+	update_health_bar()
+	
+func damage_beestje():
+	health -= 2
 	update_health_bar()
 	
 func update_health_bar():

@@ -109,9 +109,11 @@ offset_right = 32.0
 offset_bottom = -27.0
 theme_override_styles/background = SubResource("StyleBoxFlat_nb2aw")
 theme_override_styles/fill = SubResource("StyleBoxFlat_2jgde")
+max_value = 50.0
 step = 1.0
-value = 100.0
+value = 50.0
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="dino" unique_id=539607369]
 position = Vector2(0.5, 22)
@@ -119,10 +121,9 @@ shape = SubResource("RectangleShape2D_s4xl1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="dino" unique_id=1435050213]
 sprite_frames = SubResource("SpriteFrames_l74px")
-animation = &"death"
+animation = &"attack"
 autoplay = "default"
-frame = 3
-frame_progress = 1.0
+frame_progress = 0.6070391
 
 [node name="AttackArea" type="Area2D" parent="dino" unique_id=885833993]
 
@@ -135,6 +136,8 @@ polygon = PackedVector2Array(-118, -78, -119, 80, 0, 61, 0, -18)
 [node name="damegeArea" type="CollisionShape2D" parent="dino/DamageArea" unique_id=1712104832]
 position = Vector2(-36, 11)
 shape = SubResource("RectangleShape2D_xl74u")
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="dino" unique_id=65441847]
 
 [connection signal="body_entered" from="dino/AttackArea" to="dino" method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="dino/AttackArea" to="dino" method="_on_attack_area_body_exited"]
